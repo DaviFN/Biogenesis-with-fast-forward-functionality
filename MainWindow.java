@@ -47,6 +47,7 @@ public class MainWindow extends JFrame {
 	protected StdAction decreaseCO2Action;
 	protected StdAction manageConnectionsAction;
 	protected StdAction abortTrackingAction;
+	protected StdAction fastForwardAction;
 	protected StdAction openGameAction;
 	protected StdAction saveGameAsAction;
 	protected StdAction quitAction;
@@ -82,6 +83,8 @@ public class MainWindow extends JFrame {
 //	 Comptador de frames, per saber quan actualitzar la finestra d'informaci�
 	protected long nFrames=0;
 	private ImageIcon imageIcon = new ImageIcon(getClass().getResource("images/bullet.jpg")); //$NON-NLS-1$
+
+	private boolean userWantsToFastForward = false;
 
 	public JFileChooser getWorldChooser() {
 		return worldChooser;
@@ -159,6 +162,8 @@ public class MainWindow extends JFrame {
 				"T_MANAGE_CONNECTIONS"); //$NON-NLS-1$
 		abortTrackingAction = new AbortTrackingAction("T_ABORT_TRACKING", "images/menu_stop_tracking.png",  //$NON-NLS-1$//$NON-NLS-2$
 				"T_ABORT_TRACKING"); //$NON-NLS-1$
+		fastForwardAction = new FastForwardAction("T_FAST_FORWARD", "images/fast-forward.png",  //$NON-NLS-1$//$NON-NLS-2$
+				"T_FAST_FORWARD"); //$NON-NLS-1$
 		openGameAction = new OpenGameAction("T_OPEN", null, "T_OPEN_WORLD");  //$NON-NLS-1$//$NON-NLS-2$
 		saveGameAsAction = new SaveGameAsAction("T_SAVE_AS", null, "T_SAVE_WORLD_AS");  //$NON-NLS-1$//$NON-NLS-2$
 		quitAction = new QuitAction("T_QUIT", null, "T_QUIT_PROGRAM"); //$NON-NLS-1$ //$NON-NLS-2$
@@ -183,6 +188,7 @@ public class MainWindow extends JFrame {
 		toolBar.add(manageConnectionsAction);
 		toolBar.add(abortTrackingAction);
 		abortTrackingAction.setEnabled(_trackedOrganism != null);
+		toolBar.add(fastForwardAction);
 		toolBar.invalidate();
 		toolBar.repaint();
 	}
@@ -441,6 +447,17 @@ public class MainWindow extends JFrame {
 		
 		public void actionPerformed(ActionEvent e) {
 			setTrackedOrganism(null);
+		}
+	}
+
+	class FastForwardAction extends StdAction {
+		private static final long serialVersionUID = 1L;
+		public FastForwardAction(String text, String icon_path, String desc) {
+			super(text, icon_path, desc);
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			userWantsToFastForward = true;
 		}
 	}
 	
@@ -829,7 +846,11 @@ public class MainWindow extends JFrame {
 	    public void run() {
 	    	if (_isProcessActive) {
 	    		// executa un torn
-	    		_world.time();
+				final int howMuchFramesToAdvance = userWantsToFastForward ? 1000 : 1;
+				for(int i = 0 ; i < howMuchFramesToAdvance ; ++i) {
+					_world.time();
+					userWantsToFastForward = false;
+				}
 	    		nFrames++;
 	    		if (nFrames % 20 == 0) {
 	    			//if (_statisticsWindow != null)
