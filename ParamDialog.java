@@ -37,6 +37,7 @@ public class ParamDialog extends JDialog {
 	protected JCheckBox hardwareFBObjectCheck = null;
 	private JTextField rubbingText = null;
 	private JTextField elasticityText = null;
+	private JTextField nFramesToFastForwardText = null;
 	private JTextField initialnumberText = null;
 	private JTextField initialenergyText = null;
 	private JTextField initialO2Text = null;
@@ -105,6 +106,7 @@ public class ParamDialog extends JDialog {
 		delayText.setText(String.valueOf(Utils.DEF_DELAY));
 		rubbingText.setText(String.valueOf(Utils.DEF_RUBBING));
 		elasticityText.setText(String.valueOf(Utils.DEF_ELASTICITY));
+		nFramesToFastForwardText.setText(String.valueOf(Utils.DEF_N_FRAMES_TO_FAST_FORWARD));
 		initialnumberText.setText(String.valueOf(Utils.DEF_INITIAL_ORGANISMS));
 		initialenergyText.setText(String.valueOf(Utils.DEF_INITIAL_ENERGY));
 		initialO2Text.setText(String.valueOf(Utils.DEF_INITIAL_O2));
@@ -278,6 +280,13 @@ public class ParamDialog extends JDialog {
 		panel.add(label);
 		elasticityText = new JTextField(Double.toString(Utils.ELASTICITY),6);
 		panel.add(elasticityText);
+		worldPanel.add(panel);
+		// Number of frames to fast forward
+		panel = new JPanel();
+		label = new JLabel(Messages.getString("T_N_FRAMES_TO_FAST_FORWARD")); //$NON-NLS-1$
+		panel.add(label);
+		nFramesToFastForwardText = new JTextField(Integer.toString(Utils.N_FRAMES_TO_FAST_FORWARD),6);
+		panel.add(nFramesToFastForwardText);
 		worldPanel.add(panel);
 		
 		return worldPanel;
@@ -480,6 +489,12 @@ public class ParamDialog extends JDialog {
 		try {
 			d = Double.parseDouble(elasticityText.getText());
 			if (d >= 0 && d <= 1) Utils.ELASTICITY = d;
+		} catch (NumberFormatException ex) {
+			// Keep old value if there is a problem
+		}
+		try {
+			i = Integer.parseInt(nFramesToFastForwardText.getText());
+			if (i >= 1 && i <= 1000000) Utils.N_FRAMES_TO_FAST_FORWARD = i;
 		} catch (NumberFormatException ex) {
 			// Keep old value if there is a problem
 		}

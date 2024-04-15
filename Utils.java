@@ -191,6 +191,10 @@ public final class Utils {
 	/**
 	 * This is the default number of miliseconds that pas between frames.
 	 */
+	final static int DEF_N_FRAMES_TO_FAST_FORWARD = 1000;
+	/**
+	 * This is the default number of frames to fast forward.
+	 */
 	final static int DEF_DELAY = 50;
 	/**
 	 * This is the default port where the net server will listen for connections.
@@ -374,6 +378,10 @@ public final class Utils {
 	static double ELASTICITY = DEF_ELASTICITY;
 	/**
 	 * This is the number of miliseconds that pas between frames.
+	 */
+	static int N_FRAMES_TO_FAST_FORWARD = DEF_N_FRAMES_TO_FAST_FORWARD;
+	/**
+	 * This is the number of frames to fast forward.
 	 */
 	static int DELAY = DEF_DELAY;
 	/**
@@ -626,6 +634,7 @@ public final class Utils {
 			prefs.putDouble("MAX_VEL",MAX_VEL); //$NON-NLS-1$
 			prefs.putDouble("MAX_ROT",MAX_ROT); //$NON-NLS-1$
 			prefs.putDouble("ELASTICITY",ELASTICITY); //$NON-NLS-1$
+			prefs.putInt("N_FRAMES_TO_FAST_FORWARD",N_FRAMES_TO_FAST_FORWARD); //$NON-NLS-1$
 			prefs.putInt("DELAY",DELAY); //$NON-NLS-1$
 			prefs.putInt("LOCAL_PORT",LOCAL_PORT); //$NON-NLS-1$
 			prefs.putBoolean("ACCEPT_CONNECTIONS",ACCEPT_CONNECTIONS); //$NON-NLS-1$
@@ -691,6 +700,7 @@ public final class Utils {
 			MAX_VEL = prefs.getDouble("MAX_VEL",DEF_MAX_VEL); //$NON-NLS-1$
 			MAX_ROT = prefs.getDouble("MAX_ROT",DEF_MAX_ROT); //$NON-NLS-1$
 			ELASTICITY = prefs.getDouble("ELASTICITY",DEF_ELASTICITY); //$NON-NLS-1$
+			N_FRAMES_TO_FAST_FORWARD = prefs.getInt("N_FRAMES_TO_FAST_FORWARD",DEF_N_FRAMES_TO_FAST_FORWARD); //$NON-NLS-1$
 			DELAY = prefs.getInt("DELAY",DEF_DELAY); //$NON-NLS-1$
 			LOCAL_PORT = prefs.getInt("LOCAL_PORT",DEF_LOCAL_PORT); //$NON-NLS-1$
 			MAX_CONNECTIONS = prefs.getInt("MAX_CONNECTIONS",DEF_MAX_CONNECTIONS); //$NON-NLS-1$

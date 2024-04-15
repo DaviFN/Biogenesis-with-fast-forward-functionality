@@ -846,7 +846,7 @@ public class MainWindow extends JFrame {
 	    public void run() {
 	    	if (_isProcessActive) {
 	    		// executa un torn
-				final int howMuchFramesToAdvance = userWantsToFastForward ? 1000 : 1;
+				final int howMuchFramesToAdvance = userWantsToFastForward ? Utils.N_FRAMES_TO_FAST_FORWARD : 1;
 				for(int i = 0 ; i < howMuchFramesToAdvance ; ++i) {
 					_world.time();
 					userWantsToFastForward = false;
